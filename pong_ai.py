@@ -1,6 +1,7 @@
-import pygame
 import random
 from typing import Optional
+
+import pygame
 
 # -----------------------------
 # Konfigurasi dasar
@@ -22,6 +23,7 @@ BALL_SPEED_MAX = 10  # batas kecepatan agar tetap playable
 
 AI_TOLERANCE = 8  # zona mati agar AI tidak jitter
 
+
 # -----------------------------
 # Helper untuk reset bola
 # -----------------------------
@@ -37,6 +39,7 @@ def reset_ball(ball_rect: pygame.Rect, toward_left: Optional[bool] = None):
     vx = dir_x * BALL_SPEED_X_INIT
     return vx, vy
 
+
 # -----------------------------
 # Main Game
 # -----------------------------
@@ -49,8 +52,12 @@ def main():
 
     # Objek
     player = pygame.Rect(20, HEIGHT // 2 - PADDLE_H // 2, PADDLE_W, PADDLE_H)
-    ai = pygame.Rect(WIDTH - 20 - PADDLE_W, HEIGHT // 2 - PADDLE_H // 2, PADDLE_W, PADDLE_H)
-    ball = pygame.Rect(WIDTH // 2 - BALL_SIZE // 2, HEIGHT // 2 - BALL_SIZE // 2, BALL_SIZE, BALL_SIZE)
+    ai = pygame.Rect(
+        WIDTH - 20 - PADDLE_W, HEIGHT // 2 - PADDLE_H // 2, PADDLE_W, PADDLE_H
+    )
+    ball = pygame.Rect(
+        WIDTH // 2 - BALL_SIZE // 2, HEIGHT // 2 - BALL_SIZE // 2, BALL_SIZE, BALL_SIZE
+    )
 
     # Kecepatan bola
     ball_vel_x, ball_vel_y = reset_ball(ball, toward_left=None)
@@ -126,11 +133,15 @@ def main():
         if ball.right < 0:
             # AI skor
             score_ai += 1
-            ball_vel_x, ball_vel_y = reset_ball(ball, toward_left=False)  # arahkan ke AI (kanan)
+            ball_vel_x, ball_vel_y = reset_ball(
+                ball, toward_left=False
+            )  # arahkan ke AI (kanan)
         elif ball.left > WIDTH:
             # Player skor
             score_player += 1
-            ball_vel_x, ball_vel_y = reset_ball(ball, toward_left=True)  # arahkan ke player (kiri)
+            ball_vel_x, ball_vel_y = reset_ball(
+                ball, toward_left=True
+            )  # arahkan ke player (kiri)
 
         # 8) Gambar
         screen.fill(BLACK)
@@ -149,7 +160,9 @@ def main():
         # Skor
         score_text_left = font.render(str(score_player), True, WHITE)
         score_text_right = font.render(str(score_ai), True, WHITE)
-        screen.blit(score_text_left, (WIDTH // 2 - 60 - score_text_left.get_width(), 20))
+        screen.blit(
+            score_text_left, (WIDTH // 2 - 60 - score_text_left.get_width(), 20)
+        )
         screen.blit(score_text_right, (WIDTH // 2 + 60, 20))
 
         pygame.display.flip()
